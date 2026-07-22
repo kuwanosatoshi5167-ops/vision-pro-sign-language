@@ -10,24 +10,19 @@ import SwiftUI
 @main
 struct SignLanguageRecorderApp: App {
 
-    @State private var appModel = AppModel()
+    @State private var recorder =
+        HandTrackingRecorder()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(appModel)
+                .environment(recorder)
         }
 
-        ImmersiveSpace(id: appModel.immersiveSpaceID) {
+        ImmersiveSpace(id: "HandTrackingSpace") {
             ImmersiveView()
-                .environment(appModel)
-                .onAppear {
-                    appModel.immersiveSpaceState = .open
-                }
-                .onDisappear {
-                    appModel.immersiveSpaceState = .closed
-                }
+                .environment(recorder)
         }
-        .immersionStyle(selection: .constant(.full), in: .full)
+        .immersionStyle(selection: .constant(.mixed), in: .mixed)
     }
 }

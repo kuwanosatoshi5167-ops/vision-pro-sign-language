@@ -8,11 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		94A1B7173000D5CE00911C28 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 94A1B7163000D5CE00911C28 /* RealityKitContent */; };
+		94A1B72C3000D84200911C28 /* HandJointRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A1B72B3000D82C00911C28 /* HandJointRecord.swift */; };
+		94A1B72E3000D86F00911C28 /* HandTrackingRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A1B72D3000D86200911C28 /* HandTrackingRecorder.swift */; };
+		94A1B7303000D8A200911C28 /* HandJointName+CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A1B72F3000D89700911C28 /* HandJointName+CSV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		94A1B7113000D5CE00911C28 /* SignLanguageRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SignLanguageRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94A1B7153000D5CE00911C28 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
+		94A1B72B3000D82C00911C28 /* HandJointRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandJointRecord.swift; sourceTree = "<group>"; };
+		94A1B72D3000D86200911C28 /* HandTrackingRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandTrackingRecorder.swift; sourceTree = "<group>"; };
+		94A1B72F3000D89700911C28 /* HandJointName+CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HandJointName+CSV.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -51,6 +57,9 @@
 		94A1B7083000D5CE00911C28 = {
 			isa = PBXGroup;
 			children = (
+				94A1B72B3000D82C00911C28 /* HandJointRecord.swift */,
+				94A1B72D3000D86200911C28 /* HandTrackingRecorder.swift */,
+				94A1B72F3000D89700911C28 /* HandJointName+CSV.swift */,
 				94A1B7133000D5CE00911C28 /* SignLanguageRecorder */,
 				94A1B7143000D5CE00911C28 /* Packages */,
 				94A1B7123000D5CE00911C28 /* Products */,
@@ -148,6 +157,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94A1B7303000D8A200911C28 /* HandJointName+CSV.swift in Sources */,
+				94A1B72C3000D84200911C28 /* HandJointRecord.swift in Sources */,
+				94A1B72E3000D86F00911C28 /* HandTrackingRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +176,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INFOPLIST_KEY_NSHandsTrackingUsageDescription = "This app records hand joint positions for sign language research.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -192,6 +205,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				INFOPLIST_KEY_NSHandsTrackingUsageDescription = "This app records hand joint positions for sign language research.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

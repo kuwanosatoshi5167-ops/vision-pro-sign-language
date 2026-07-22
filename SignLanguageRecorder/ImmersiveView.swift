@@ -5,26 +5,23 @@
 //  Created by satoshi kuwano on 2026/07/10.
 //
 
-import SwiftUI
 import RealityKit
-import RealityKitContent
+import SwiftUI
 
 struct ImmersiveView: View {
 
-    var body: some View {
-        RealityView { content in
-            // Add the initial RealityKit content
-            if let immersiveContentEntity = try? await Entity(named: "Immersive", in: realityKitContentBundle) {
-                content.add(immersiveContentEntity)
+    @Environment(HandTrackingRecorder.self)
+    private var recorder
 
-                // Put skybox here.  See example in World project available at
-                // https://developer.apple.com/
-            }
+    var body: some View {
+        RealityView { _ in
+            /*
+             今回はデータ収集だけを行うため、
+             3Dオブジェクトは追加しない。
+            */
+        }
+        .task {
+            await recorder.startHandTrackingSession()
         }
     }
-}
-
-#Preview(immersionStyle: .full) {
-    ImmersiveView()
-        .environment(AppModel())
 }
