@@ -19,35 +19,42 @@ struct ContentView: View {
     private var dismissImmersiveSpace
 
     @State private var isImmersiveSpaceOpen = false
+    @State private var subjectID = "S01"
+    @State private var dominantHand = "right"
+
+    private static let trackingWarningThreshold = 0.8
 
     var body: some View {
-        @Bindable var recorder = recorder
-
         VStack(spacing: 20) {
-            Image(systemName: "hand.raised.fingers.spread")
-                .font(.system(size: 72))
-
-            Text("Hand Joint Recorder")
+            Text("Sign Language Recorder")
                 .font(.largeTitle)
 
-            Text(recorder.statusMessage)
-                .multilineTextAlignment(.center)
-
-            LabeledContent(
-                "Recorded CSV rows",
-                value: "\(recorder.recordCount)"
-            )
-
-            if let savedFileURL = recorder.savedFileURL {
-                VStack(spacing: 8) {
-                    Text("Saved file")
-                        .font(.headline)
-
-                    Text(savedFileURL.lastPathComponent)
-                        .font(.caption)
-                        .textSelection(.enabled)
-                }
+            if let collection = recorder.collection {
+                collectionView(collection)
+            } else {
+                setupView
             }
+
+            Text(recorder.statusMessage)
+                .font(.caption)
+                .multilineTextAlignment(.center)
+        }
+        .padding(40)
+        .frame(width: 520)
+    }
+
+    // MARK: - Setup
+
+    private var setupView: some View {
+        VStack(spacing: 16) {
+            TextField("Subject ID", text: $subjectID)
+                .textFieldStyle(.roundedBorder)
+
+            Picker("Dominant hand", selection: $dominantHand) {
+                Text("Right").tag("right")
+                Text("Left").tag("left")
+            }
+            .pickerStyle(.segmented)
 
             Button(
                 isImmersiveSpaceOpen
@@ -59,27 +66,75 @@ struct ContentView: View {
                 }
             }
 
-            Button("Start Recording") {
-                recorder.startRecording()
+            Button("Start Session") {
+                recorder.startCollection(
+                    subjectID: subjectID,
+                    dominantHand: dominantHand
+                )
             }
             .disabled(
                 !recorder.isSessionRunning
-                || recorder.isRecording
+                || subjectID.isEmpty
+            )
+        }
+    }
+
+    // MARK: - Collection
+
+    private func collectionView(
+        _ collection: RecordingSession
+    ) -> some View {
+        VStack(spacing: 16) {
+            Text(collection.progressText)
+                .font(.caption)
+
+            Text(collection.promptText)
+                .font(.system(size: 44, weight: .semibold))
+                .multilineTextAlignment(.center)
+
+            if collection.isWarmup {
+                Text("Warm-up — flagged, not part of the training set")
+                    .font(.caption)
+            }
+
+            if collection.phase == .review {
+                if let ratio = recorder.lastWindowTrackedRatio,
+                   ratio < Self.trackingWarningThreshold {
+                    Text(
+                        "Hands left view for \(Int((1 - ratio) * 100))% of the window — consider a redo."
+                    )
+                    .font(.caption)
+                }
+
+                HStack(spacing: 16) {
+                    Button("Keep") {
+                        collection.keep()
+                    }
+
+                    Button("Redo") {
+                        collection.redo()
+                    }
+                }
+            }
+
+            LabeledContent(
+                "Windows kept",
+                value: "\(recorder.keptWindowCount)"
             )
 
-            Button("Stop and Save CSV") {
-                recorder.stopRecordingAndSave()
+            if let savedFileURL = recorder.savedFileURL {
+                Text(savedFileURL.lastPathComponent)
+                    .font(.caption)
+                    .textSelection(.enabled)
             }
-            .disabled(!recorder.isRecording)
 
-            Button("Cancel Recording", role: .destructive) {
-                recorder.cancelRecording()
+            Button("End Session", role: .destructive) {
+                recorder.endCollection()
             }
-            .disabled(!recorder.isRecording)
         }
-        .padding(40)
-        .frame(width: 500)
     }
+
+    // MARK: - Immersive space
 
     private func toggleImmersiveSpace() async {
         if isImmersiveSpaceOpen {
