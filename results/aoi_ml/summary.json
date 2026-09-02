@@ -1,0 +1,68 @@
+{
+  "evaluation": {
+    "method": "six-fold leave-one-subject-out",
+    "validation": "next subject in sorted order; excluded from training",
+    "early_stopping_metric": "validation macro F1",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "target_frames": 90,
+    "tracking_handling": "temporal interpolation plus left/right tracking-mask channels"
+  },
+  "dataset": {
+    "windows": 339,
+    "subjects": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S07"
+    ],
+    "class_counts": {
+      "Hello": 57,
+      "ThankYou": 57,
+      "Yes": 57,
+      "No": 56,
+      "Help": 56,
+      "Rest": 56
+    },
+    "source_files": [
+      "session_S01_20260821_135029.csv",
+      "session_S02_20260821_140049.csv",
+      "session_S03_20260821_141108.csv",
+      "session_S04_20260821_143723.csv",
+      "session_S05_20260821_144912.csv",
+      "session_S07_20260831_132422.csv"
+    ]
+  },
+  "models": {
+    "cnn": {
+      "accuracy_mean": 0.7718780727630286,
+      "accuracy_std": 0.023762135641287284,
+      "macro_f1_mean": 0.766101972647574,
+      "macro_f1_std": 0.023617706041067513,
+      "representative_seed": 1,
+      "representative_accuracy": 0.7581120943952803,
+      "representative_macro_f1": 0.7514395354250142
+    },
+    "lstm": {
+      "accuracy_mean": 0.8092428711897739,
+      "accuracy_std": 0.02707158288679687,
+      "macro_f1_mean": 0.8013399535835447,
+      "macro_f1_std": 0.02719206622772397,
+      "representative_seed": 2,
+      "representative_accuracy": 0.8171091445427728,
+      "representative_macro_f1": 0.8054076581095152
+    }
+  },
+  "environment": {
+    "python": "3.13.12",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "torch": "2.13.0+cpu",
+    "device": "cpu"
+  }
+}
