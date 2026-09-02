@@ -16,3 +16,7 @@ DerivedData/
 # Xcode generated files
 *.xccheckout
 *.xcscmblueprint
+
+# Local-only docs (kept out of the repo)
+/CLAUDE.md
+/SCHEMA.md

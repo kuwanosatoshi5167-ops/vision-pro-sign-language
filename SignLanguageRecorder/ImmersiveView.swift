@@ -14,14 +14,18 @@ struct ImmersiveView: View {
     private var recorder
 
     var body: some View {
-        RealityView { _ in
+        RealityView { content in
             /*
-             今回はデータ収集だけを行うため、
-             3Dオブジェクトは追加しない。
+             関節の球はサンプリングループが直接更新するため、
+             ここではルートを追加するだけでよい。
             */
+            content.add(recorder.visualizer.root)
         }
         .task {
             await recorder.startHandTrackingSession()
+        }
+        .onDisappear {
+            recorder.stopHandTrackingSession()
         }
     }
 }
