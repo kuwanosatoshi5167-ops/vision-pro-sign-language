@@ -1,0 +1,7 @@
+true_label,Hello,ThankYou,Yes,No,Help,Rest
+Hello,55,0,0,0,2,0
+ThankYou,0,47,0,0,10,0
+Yes,8,8,30,8,1,2
+No,7,1,9,36,0,3
+Help,1,0,0,0,47,8
+Rest,0,3,0,9,2,42

@@ -20,3 +20,9 @@ DerivedData/
 # Local-only docs (kept out of the repo)
 /CLAUDE.md
 /SCHEMA.md
+
+# Python local environments and caches
+.venv/
+.matplotlib/
+__pycache__/
+*.py[cod]
